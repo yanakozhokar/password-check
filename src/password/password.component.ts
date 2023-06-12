@@ -7,20 +7,17 @@ import { Component } from '@angular/core';
 })
 export class PasswordStrengthComponent {
   password: string = '';
+  strengthSection: number = -1;
 
-  isPasswordEmpty(): boolean {
-    return this.password.length === 0;
-  }
+  calculatePasswordStrength() {
+    const passwordLength = this.password.length;
 
-  isPasswordMedium(): boolean {
-    return /^[a-zA-Z0-9]+$/.test(this.password);
-  }
-
-  isPasswordStrong(): boolean {
-    return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(this.password);
-  }
-
-  checkPasswordStrength(): void {
-    // No need to do anything here since the template uses the getter methods for evaluation
+    if (passwordLength === 0 || passwordLength < 8) {
+      this.strengthSection = 0;
+    } else if (passwordLength >= 8 && passwordLength < 12) {
+      this.strengthSection = 1;
+    } else {
+      this.strengthSection = 2;
+    }
   }
 }

@@ -3,17 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { PasswordStrengthComponent } from '../password/password.component';
+import { PasswordModule } from '../password/password.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PasswordStrengthComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    PasswordModule
   ],
   providers: [],
   bootstrap: [AppComponent]
