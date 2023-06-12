@@ -29,10 +29,10 @@ export class PasswordStrengthComponent {
   }
 
   updateSections(section1: string, section2: string, section3: string) {
-    const sections = document.getElementsByClassName('section');
-    sections[0].className = `section ${section1}`;
-    sections[1].className = `section ${section2}`;
-    sections[2].className = `section ${section3}`;
+    const sections = document.getElementsByClassName('password__indicator-section');
+    sections[0].className = `password__indicator-section ${section1}`;
+    sections[1].className = `password__indicator-section ${section2}`;
+    sections[2].className = `password__indicator-section ${section3}`;
   }
 
   hasLetters() {
