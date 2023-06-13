@@ -1,28 +1,48 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PasswordService {
-  constructor() { }
+  calculateStrength(password: string): string[] {
+    if (!password.length) {
+      return ['gray', 'gray', 'gray'];
+    }
 
-  hasLetters(password: string) {
+    if (password.length < 8) {
+      return ['red', 'red', 'red'];
+    }
+
+    if (this.isStrongPassword(password)) {
+      return ['green', 'green', 'green'];
+    } else if (this.isMediumPassword(password)) {
+      return ['yellow', 'yellow', 'gray'];
+    } else {
+      return ['red', 'gray', 'gray'];
+    }
+  }
+
+  private hasLetters(password: string): boolean {
     return /[a-zA-Z]/.test(password);
   }
 
-  hasDigits(password: string) {
+  private hasDigits(password: string): boolean {
     return /[0-9]/.test(password);
   }
 
-  hasSymbols(password: string) {
+  private hasSymbols(password: string): boolean {
     return /[^\w]/.test(password);
   }
 
-  isStrongPassword(password: string) {
-    return this.hasLetters(password) && this.hasDigits(password) && this.hasSymbols(password);
+  private isStrongPassword(password: string): boolean {
+    return (
+      this.hasLetters(password) &&
+      this.hasDigits(password) &&
+      this.hasSymbols(password)
+    );
   }
 
-  isMediumPassword(password: string) {
+  private isMediumPassword(password: string): boolean {
     const hasLetters = this.hasLetters(password);
     const hasDigits = this.hasDigits(password);
     const hasSymbols = this.hasSymbols(password);
