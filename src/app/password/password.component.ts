@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PasswordService } from '../service/password.service';
 
 @Component({
   selector: 'app-password-strength',
@@ -6,7 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./password.component.scss']
 })
 export class PasswordStrengthComponent {
- password: string = '';
+  password: string = '';
+
+  constructor(private passwordService: PasswordService) {}
 
   calculateStrength() {
     if (!this.password.length) {
@@ -19,9 +22,9 @@ export class PasswordStrengthComponent {
       return;
     }
 
-    if (this.isStrongPassword()) {
+    if (this.passwordService.isStrongPassword(this.password)) {
       this.updateSections('green', 'green', 'green');
-    } else if (this.isMediumPassword()) {
+    } else if (this.passwordService.isMediumPassword(this.password)) {
       this.updateSections('yellow', 'yellow', 'gray');
     } else {
       this.updateSections('red', 'gray', 'gray');
@@ -33,34 +36,5 @@ export class PasswordStrengthComponent {
     sections[0].className = `password__indicator-section ${section1}`;
     sections[1].className = `password__indicator-section ${section2}`;
     sections[2].className = `password__indicator-section ${section3}`;
-  }
-
-  hasLetters() {
-    return /[a-zA-Z]/.test(this.password);
-  }
-
-  hasDigits() {
-    return /[0-9]/.test(this.password);
-  }
-
-hasSymbols() {
-  return /[^\w]/.test(this.password);
-}
-
-
-  isStrongPassword() {
-    return this.hasLetters() && this.hasDigits() && this.hasSymbols();
-  }
-
-  isMediumPassword() {
-    const hasLetters = this.hasLetters();
-    const hasDigits = this.hasDigits();
-    const hasSymbols = this.hasSymbols();
-
-    return (
-      (hasLetters && hasDigits) ||
-      (hasLetters && hasSymbols) ||
-      (hasDigits && hasSymbols)
-    );
   }
 }
